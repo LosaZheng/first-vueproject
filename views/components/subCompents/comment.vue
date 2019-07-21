@@ -7,30 +7,40 @@
     <mt-button type="primary" size="large" @click ="addContent">发表评论</mt-button>
 
     <div class="cmt-list">
-    
-        <div class="cmt-item" v-for="(item,i) in comments" :key="i">
-            <div class="cmt-title">
-              第{{ i+1 }}楼&nbsp;&nbsp;用户：{{item.user_name}}&nbsp;&nbsp;发表时间：{{item.add_time | dataFormat}}
-            </div>
-            <div class="cmt-body">
-                {{item.content= item.content.trim()==""?"随意说":item.content}}
-            </div>
-        </div>
+       <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="false"
+       :bottom-distance="50"  :bottom-pull-text="bottomPullText"
+       :bottom-drop-text="bottomDropText" >
+          <ul>
+             <li class="cmt-item" v-for="(item,i) in comments" :key="i">
+                <div class="cmt-title">
+                  第{{ i+1 }}楼&nbsp;&nbsp;用户：{{item.user_name}}&nbsp;&nbsp;发表时间：{{item.add_time | dataFormat}}
+                </div>
+                <div class="cmt-body">
+                    {{item.content= item.content.trim()==""?"随意说":item.content}}
+                </div>
+            </li>
+          </ul>
+       </mt-loadmore>
     </div>
 
-    <mt-button type="danger" size="large" plain @click="getMore">加载更多</mt-button>
+    <!-- <mt-button type="danger" size="large" plain @click="getMore">加载更多</mt-button> -->
   </div>
 </template>
 
 <script>
     import {Toast} from "mint-ui";
+
     export default {
         data() {
             return {
                 pageCount:1,
                comments:[],
                content:"",
-               allLoaded:false
+               allLoaded:false,
+               topStatus :"",
+               bottomPullText:"刷新",
+               bottomDropText:"更新",
+               bottomStatus:'',
             };
         },
         created() {
@@ -46,18 +56,23 @@
                 if(res.body.message.length==0){
                   this.allLoaded=true;
                 }else{
-                    this.comments=this.comments.concat(res.body.message);
+                   this.comments=this.comments.concat(res.body.message);
+                    this.$refs.loadmore.onBottomLoaded();               
                 }
                 
               }
             })
           },
           loadBottom(){
-             this.pageCount++;
-            this.getComments();
-            this.$refs.loadmore.onBottomLoaded();
-          },
 
+            this.pageCount++;
+            setTimeout(()=>{
+              this.getComments();
+            },2000)      
+          },
+           handleBottomChange(status) {
+              this.topStatus = status;
+          },
           addContent(){
              if(this.content.trim()==""){
                return Toast("评论不能为空");
@@ -83,7 +98,8 @@
           getMore(){
             this.pageCount++;
             this.getComments();
-          }
+          },
+
         },
         props:["id"]
     };
@@ -101,11 +117,13 @@
         }
         .cmt-list {
             margin: 5px 0;
+            overflow:scroll;
+            height:500px;
             .cmt-item {
                 font-size: 13px;
                 .cmt-title {
                     line-height: 30px;
-                    background-color: #ccc;
+                    background-color: #fff;
                 }
                 .cmt-body {
                     line-height: 35px;
@@ -114,6 +132,8 @@
             }
             ul{
               list-style:none;
+              padding:0;
+              margin:0;
             }
         }
     }

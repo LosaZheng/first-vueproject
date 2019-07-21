@@ -8,6 +8,9 @@ import search from "./components/tarbar/searchComponent.vue";
 import newsList from "./components/news/newsList.vue";
 import newsItem from "./components/news/newsItem.vue";
 import photoList from "./components/photos/photoList.vue";
+import photoInfo from "./components/photos/photoInfo.vue";
+import goodsList from "./components/goods/goodsList.vue";
+
 var router = new VueRouter({
     routes: [
         { path: "/", redirect: "/home" },
@@ -18,6 +21,9 @@ var router = new VueRouter({
         { path: "/home/newsList", component: newsList },
         { path: "/home/newsItem/:id", component: newsItem },
         { path: "/home/photoList", component: photoList },
+        { path: "/home/photoInfo/:id", component: photoInfo },
+        { path: "/home/goodsList", component: goodsList }
+
     ],
     linkActiveClass: "mui-active", //修改路由默认类名
 })

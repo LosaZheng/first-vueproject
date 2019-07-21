@@ -16,21 +16,30 @@ Vue.filter("dataFormat", function(dataStr, pat = "YYYY-MM-DD HH-mm-ss") {
 })
 import app from "./App.vue";
 
+import MintUI from "mint-ui";
+Vue.use(MintUI)
 import "mint-ui/lib/style.css";
 //引入mui样式
 import "./lib/mui/css/mui.min.css";
 import "./lib/mui/css/icons-extra.css";
 //按需引入组件
-import { Header, Swipe, SwipeItem, Button, Loadmore } from 'mint-ui';
-
+// import { Header, Swipe, SwipeItem, Button, Loadmore, Spinner, Lazyload } from 'mint-ui';
+//引入缩略插件
+import VuePreviw from "vue-preview";
+Vue.use(VuePreviw);
 //引入路由规则
 import router from "./router.js";
 
-Vue.component(Header.name, Header);
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
-Vue.component(Button.name, Button);
-Vue.component(Loadmore.name, Loadmore);
+// import { InfiniteScroll } from 'mint-ui';
+
+// Vue.use(InfiniteScroll);
+// Vue.use(Lazyload);
+// Vue.component(Header.name, Header);
+// Vue.component(Swipe.name, Swipe);
+// Vue.component(SwipeItem.name, SwipeItem);
+// Vue.component(Button.name, Button);
+// Vue.component(Loadmore.name, Loadmore);
+// Vue.component(Spinner.name, Spinner);
 
 var vm = new Vue({
     el: "#app",
