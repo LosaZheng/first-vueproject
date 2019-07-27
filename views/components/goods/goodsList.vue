@@ -4,7 +4,7 @@
             infinite-scroll-disabled="loading"
             infinite-scroll-distance="10"
             infinite-scroll-immediate-check="false">
-            <li v-for="item in goodsList" :key="item.id">
+            <li v-for="item in goodsList" :key="item.id" @click="toDetail(item.id)">
                 <img :src="item.img_url" alt="">
                 <h3>{{item.title}}</h3>
               <div class="sellInfo">
@@ -51,6 +51,9 @@ export default {
             this.loading=true;
             this.num++;
             this.getGoods();
+        },
+        toDetail(id){
+            this.$router.push({"name":"goodsInfo",params:{id:id}})
         }
     }
 }

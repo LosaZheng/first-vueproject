@@ -1,10 +1,11 @@
 <template>
   <div class="app-container">
     <mt-header fixed title="黑马案例"></mt-header>
+ 
     <transition @before-enter="beforeEnter"
     @enter="enter"
-    @leave="leave">
-      <router-view></router-view>
+    @leave="leave">    
+      <router-view ></router-view>    
     </transition>
     <nav class="mui-bar mui-bar-tab">
       <router-link class="mui-tab-myItem" to="/home">
@@ -17,7 +18,7 @@
       </router-link>
       <router-link class="mui-tab-myItem" to="/shopcar">
         <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-          <span class="mui-badge">0</span>
+          <span class="mui-badge" id="badge">{{$store.getters.getAllCount}}</span>
         </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -49,7 +50,11 @@ export default {
         el.style.transform= "translateX(-100)%";
         el.style.transition="all .5s ease";
         done()
-      }
+      },
+      activated() {
+    　　// keep-alive组件 页面进入的时候设置滚动高度
+        document.querySelector(".app-container").scrollTop = 0;
+      },
   }
 }
 </script>

@@ -1,10 +1,7 @@
 <template>
     <div>
-        <mt-swipe :auto="4000" :defaultIndex="1" >
-            <mt-swipe-item v-for="item in lunBoList" :key="item.id">
-                <img :src="item.img" />
-            </mt-swipe-item>
-        </mt-swipe>
+        <!-- 轮播图区 -->
+        <swiper :lubolist ="lunBoList"></swiper>
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4">
                 <router-link to="/home/newsList">
@@ -46,6 +43,8 @@
     </div>
 </template>
 <script>
+    // 引入轮播图组件
+    import swiper from "../subCompents/swiper.vue";
     export default {
         data() {
             return {
@@ -70,7 +69,11 @@
         },
         created() {
             this.getLunbo();
+        },
+        components:{
+            swiper,
         }
+        
     };
 </script>
 <style lang="less" scoped>
